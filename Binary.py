@@ -80,7 +80,29 @@ def test_double_hor():
       posY2 += 1
     posX += 1
 
-
+def test_double_vert():
+  global board
+  
+  posX = 0
+  posX2 = 1
+  while posX2 <= (width_board - 1):
+    posY = 0
+    for i in range(width_board):
+      if board[posX][posY] == 1 and board[posX2][posY] == 1:
+        if posX != 0:
+          board[posX - 1][posY] = 0
+        if posX2 != (width_board - 1):
+          board[posX2 + 1][posY] = 0
+      elif board[posX][posY] == 0 and  board[posX2][posY] == 0:
+        if posX != 0:
+          board[posX - 1][posY] = 1
+        if posX2 != (width_board - 1):
+          board[posX2 + 1][posY] = 1
+      posY += 1
+    posX += 1
+    posX2 += 1
+    
+    
 create_board()
 print_board()
 
@@ -88,6 +110,9 @@ ini_predef_num()
 print_board()
 
 test_double_hor()
+print_board()
+
+test_double_vert()
 print_board()
 #reset_predef_num()
 #print_board()
