@@ -1,3 +1,10 @@
+#This code solves a given binary puzzle
+#By using logic: 1s or 0s next to "00" or "11", 1s or 0s between "0?0" or "1?1"
+#Or if logic fails, by filling in a random number and testing the logic again
+#If the board is full and isn't solved, it resets the board and tries again
+#Thus eventually computing the solution
+#Predefined numbers: Numbers the user already knows
+
 from random import randint
 
 board = []
@@ -20,6 +27,7 @@ vert_list = []
 solved = False
 
 def create_board():
+  #Creates the board
   global board
   global board_copy
   global width_board
@@ -31,6 +39,7 @@ def create_board():
       board[i].append(None)
 
 def print_board():
+  #Prints the board line by line
   for i in range(width_board):
     print (board[i])
   print ("")
@@ -44,13 +53,14 @@ def ini_predef_num():
   global x
   global y
   
+  #Asks for the total of predef num and what they are
   total_predef_numb = int(input("Total of predefined numbers? "))
   for i in range(total_predef_numb):
     numb = int(input("Predefined number " + str(int(i) + 1) + " (0/1): "))
     predef_numb.append(numb)
   print ("")
 
-  
+  #Asks, in order, where the predef num are located
   for i in range(total_predef_numb):
     x.append(int(input("X co-ordinate of predefined number " + str(int(i + 1)) + ": "), base = 36))
     y.append(int(input("Y co-ordinate of predefined number " + str(int(i + 1)) + ": "), base = 36)) 
@@ -58,7 +68,7 @@ def ini_predef_num():
     print ("")
 
 def reset_board():
-  #Resets the board
+  #Resets the board (clears the board of any numbers the program filled in)
   global board
   global predef_numb
   global rand_pos_list
@@ -79,6 +89,7 @@ def reset_board():
   stringify_pos()
 
 def stringify_pos():
+  #Makes a string out of x- and y-coordinates, ex. x = 5, y = 3 Then str = "53"
   global pos_string
   
   for i in range(total_predef_numb):
@@ -167,6 +178,7 @@ def test_double_vert():
     
 
 def test_triple_hor():
+  #Looks for "0?0" or "1?1" horizontally and fills in the opposite number between them
   global board
   global pos_string
   global switch
@@ -191,6 +203,7 @@ def test_triple_hor():
     posX += 1
 
 def test_triple_vert():
+  #Looks for "0?0" or "1?1" vertically and fills in the opposite number between them
   global board
   global pos_string
   global switch
@@ -217,6 +230,7 @@ def test_triple_vert():
 
 
 def count_none():
+  #Counts how many Nones there are left in the board
   global none_in_board
   
   none_in_board = False
@@ -226,7 +240,7 @@ def count_none():
 
 
 def random_num():
-  #If the board isn't filled in, fill in a 0/1 in a random spot (not a predef number) 
+  #If the board isn't filled in, fill in a 0/1 in a spot that hasn't been filled in
   global board
   global rand_pos_list
   global pos_string
@@ -335,7 +349,8 @@ def test_solved():
         posY += 1
       posX += 1
       posX2 += 1
-
+    
+    #If none of the previous tests returned False, declare the puzzle solved, otherwise reset the board and try again
     if False not in solved_list: 
       print("")
       print ("Puzzle Solved!")
